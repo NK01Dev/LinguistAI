@@ -1,0 +1,79 @@
+<div class="min-h-screen flex flex-column">
+  <div class="flex-1 flex align-items-center justify-content-center px-3 pb-6">
+    <p-card [style]="{ width: '28rem' }" styleClass="shadow-3 border-round-2xl">
+      <ng-template pTemplate="content">
+        <form [formGroup]="form" (ngSubmit)="continue()" class="flex flex-column gap-3">
+
+          <div class="flex justify-content-end">
+            <p-select
+              formControlName="language"
+              [options]="languages"
+              optionLabel="label"
+              optionValue="value"
+              [style]="{ width: '12rem' }"
+            />
+          </div>
+
+          <div class="flex flex-column align-items-center gap-2 mb-2">
+            <div
+              class="flex align-items-center justify-content-center border-circle surface-100"
+              style="width:44px;height:44px;"
+            >
+              <i class="pi pi-check-circle text-xl"></i>
+            </div>
+            <div class="text-2xl font-semibold">Sign in to SpeakTest</div>
+            <div class="text-600">You’ll be redirected to Cognito Managed Login.</div>
+          </div>
+
+          <div class="flex flex-column gap-1">
+            <label class="text-700 font-medium" for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Email address"
+            />
+          </div>
+
+          <div class="flex flex-column gap-1">
+            <label class="text-700 font-medium" for="password">Password</label>
+            <p-password
+              inputId="password"
+              formControlName="password"
+              [toggleMask]="true"
+              [feedback]="false"
+              placeholder="Password"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+            />
+          </div>
+
+          <div class="flex align-items-center justify-content-between">
+            <div class="flex align-items-center gap-2">
+              <p-checkbox inputId="remember" formControlName="remember" [binary]="true"></p-checkbox>
+              <label for="remember" class="text-700">Remember me</label>
+            </div>
+
+            <a class="text-primary font-medium no-underline" (click)="forgotPassword()" role="button" tabindex="0">
+              Forgot password?
+            </a>
+          </div>
+
+          <p-button type="submit" label="Continue" [loading]="loading" [disabled]="loading" styleClass="w-full" />
+
+          <p-divider align="center">
+            <span class="text-600 text-sm">or</span>
+          </p-divider>
+
+          <div class="text-center text-700">
+            Don't have an account?
+            <a class="text-primary font-medium no-underline ml-1" (click)="signUp()" role="button" tabindex="0">
+              Create one
+            </a>
+          </div>
+        </form>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

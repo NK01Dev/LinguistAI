@@ -1,0 +1,13 @@
+/* File: src/styles.scss */
+@import "primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: radial-gradient(circle at 20% 10%, #f3f7ff 0%, #f8fafc 45%, #ffffff 100%);
+}
