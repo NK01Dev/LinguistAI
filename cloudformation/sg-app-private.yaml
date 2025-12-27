@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Private application security group for linguistai-dev-vpc
+
+Parameters:
+  AlbSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Security Group ID of the public ALB
+
+Resources:
+  AppPrivateSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow traffic from ALB to application
+      VpcId: vpc-059461b169105de14
+
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref AlbSecurityGroupId
+
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: sg-app-private
+        - Key: Project
+          Value: linguistai
+        - Key: Environment
+          Value: dev
+
+Outputs:
+  AppPrivateSecurityGroupId:
+    Description: App private security group ID
+    Value: !Ref AppPrivateSecurityGroup

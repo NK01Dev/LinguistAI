@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Private database security group for linguistai-dev-vpc
+
+Parameters:
+  AppSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Security Group ID of the application layer
+
+Resources:
+  DbPrivateSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow database access from app layer only
+      VpcId: vpc-059461b169105de14
+
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          SourceSecurityGroupId: !Ref AppSecurityGroupId
+
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: sg-db-private
+        - Key: Project
+          Value: linguistai
+        - Key: Environment
+          Value: dev
+
+Outputs:
+  DbPrivateSecurityGroupId:
+    Description: DB private security group ID
+    Value: !Ref DbPrivateSecurityGroup

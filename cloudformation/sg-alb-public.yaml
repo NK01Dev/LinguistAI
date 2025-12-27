@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Public ALB Security Group for linguistai-dev-vpc
+
+Resources:
+  AlbPublicSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP and HTTPS from internet to ALB
+      VpcId: vpc-059461b169105de14
+
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+
+      Tags:
+        - Key: Name
+          Value: sg-alb-public
+        - Key: Project
+          Value: linguistai
+        - Key: Environment
+          Value: dev
+
+Outputs:
+  AlbPublicSecurityGroupId:
+    Description: ALB public security group ID
+    Value: !Ref AlbPublicSecurityGroup

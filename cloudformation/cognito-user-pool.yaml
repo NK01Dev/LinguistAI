@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cognito User Pool + Client (dev)
+
+Resources:
+  TestUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: linguistai-dev-test
+
+      Schema:
+        - Name: custom:pref_lang
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+
+  TestUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: linguistai-dev-client
+      UserPoolId: !Ref TestUserPool
+
+      GenerateSecret: false
+
+      ExplicitAuthFlows:
+        - ALLOW_USER_SRP_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+
+      # ===== STEP 4: OAuth =====
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - code
+
+      AllowedOAuthScopes:
+        - openid
+        - email
+        - profile
+
+      CallbackURLs:
+        - http://localhost:4200
+
+      LogoutURLs:
+        - http://localhost:4200
