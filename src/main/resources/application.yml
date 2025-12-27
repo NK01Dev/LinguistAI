@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: SpeakTest
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# API Documentation
+springdoc:
+  api-docs:
+    path: /v1/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# Logging
+logging:
+  level:
+    root: INFO
+    hamza.patient.net.speaktest: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
